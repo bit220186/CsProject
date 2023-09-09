@@ -183,5 +183,56 @@ namespace File_manager
             goBack();
             loadButtonAction();
         }
+
+        private void listView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (listView1.FocusedItem.Bounds.Contains(e.Location) == true)
+                {
+                    contextMenuStrip1.Show(listView1, e.Location);
+                }
+            }
+        }
+
+        private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            switch (e.ClickedItem.Text)
+            {
+                case "Open":
+                    
+                    loadButtonAction();
+                    break;
+                case "Delete":
+                    // Lấy item được chọn
+                    var selectedItem = listView1.SelectedItems[0];
+
+                    // Lấy đường dẫn tới file 
+                    string tempfilePath = filePath + "/" + currentlySelectedItemName;
+
+                    // Xóa item khỏi ListView
+                    listView1.Items.Remove(selectedItem);
+
+                    // Xóa file trong máy tính
+                    if (File.Exists(tempfilePath))
+                    {
+                        File.Delete(tempfilePath);
+                    }
+                    break;
+                case "Rename":
+                    
+                    // Lấy item được chọn
+                    selectedItem = listView1.SelectedItems[0];
+                    
+                    
+                    break;
+                case "Copy":
+                    // Thêm mã xử lý cho lựa chọn "Copy" tại đây
+                    break;
+                case "Cut(Move)":
+                    // Thêm mã xử lý cho lựa chọn "Cut(Move)" tại đây
+                    break;
+            }
+        }
     }
 }
